@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeremiah — Daily Gratitude Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #1c1a18; --ink-mid: #4a453f; --ink-soft: #8a837a; --ink-faint: #c4bdb6;
+  --paper: #f5f2ec; --paper-warm: #ede8de; --paper-deep: #e4ddd0;
+  --gold: #c9943a; --gold-light: #f0d898; --gold-faint: #f8f0dc;
+  --red: #b83232; --green: #2d7a4a; --radius: 10px; --radius-lg: 16px;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; overflow-x: hidden; }
+body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
+.hero { padding: 3.5rem 1.5rem 2.5rem; text-align: center; border-bottom: 1px solid var(--paper-deep); background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%); }
+.hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 6vw, 3rem); font-weight: 400; line-height: 1.15; margin-bottom: 0.75rem; }
+.hero h1 em { font-style: italic; color: var(--ink-mid); }
+.hero-sub { font-size: 14px; color: var(--ink-soft); line-height: 1.7; max-width: 480px; margin: 0 auto 1.5rem; }
+.gold-rule { width: 48px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto; }
+.foundation { max-width: 660px; margin: 2.5rem auto; padding: 0 1.25rem; }
+.foundation-box { background: var(--gold-faint); border: 1px solid var(--gold-light); border-left: 3px solid var(--gold); border-radius: var(--radius); padding: 1.25rem 1.5rem; }
+.foundation-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.foundation-text { font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.75; color: var(--ink-mid); font-style: italic; }
+.practices { max-width: 660px; margin: 0 auto 2rem; padding: 0 1.25rem; display: flex; flex-direction: column; gap: 16px; }
+.practice { background: white; border: 1px solid var(--paper-deep); border-radius: var(--radius-lg); overflow: hidden; transition: box-shadow 0.2s; }
+.practice:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+.practice-header { padding: 1.25rem 1.5rem; display: flex; align-items: flex-start; gap: 1rem; }
+.practice-number { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; color: var(--gold-light); line-height: 1; flex-shrink: 0; margin-top: 2px; }
+.practice-meta { flex: 1; }
+.practice-when { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+.practice-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 500; color: var(--ink); line-height: 1.3; margin-bottom: 4px; }
+.practice-tagline { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
+.practice-body { padding: 0 1.5rem 1.25rem; border-top: 1px solid var(--paper-warm); }
+.practice-text { font-size: 13.5px; color: var(--ink-mid); line-height: 1.75; padding-top: 1rem; margin-bottom: 1rem; }
+.practice-text p + p { margin-top: 0.75rem; }
+.move-box { background: var(--paper-warm); border-radius: var(--radius); padding: 0.875rem 1rem; margin-bottom: 1rem; }
+.move-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+.move-text { font-family: 'Playfair Display', serif; font-size: 13.5px; font-style: italic; color: var(--ink); line-height: 1.65; }
+.interactive { border-top: 1px dashed var(--paper-deep); padding: 1rem 1.5rem 1.25rem; }
+.interactive-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 8px; }
+.interactive-prompt { font-size: 12.5px; color: var(--ink-soft); margin-bottom: 10px; line-height: 1.55; }
+.input-row { display: flex; gap: 8px; align-items: flex-end; }
+textarea { flex: 1; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink); background: var(--paper); border: 1px solid var(--paper-deep); border-radius: var(--radius); padding: 10px 12px; resize: none; min-height: 60px; line-height: 1.55; outline: none; transition: border-color 0.15s; }
+textarea:focus { border-color: var(--gold); }
+textarea::placeholder { color: var(--ink-faint); }
+.send-btn { background: var(--ink); color: var(--paper); border: none; border-radius: var(--radius); padding: 10px 16px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background 0.15s, opacity 0.15s; height: 42px; }
+.send-btn:hover { background: var(--ink-mid); }
+.send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.response-area { margin-top: 12px; display: none; }
+.response-area.visible { display: block; }
+.response-box { background: var(--paper-warm); border-radius: var(--radius); padding: 1rem 1.125rem; font-size: 13.5px; color: var(--ink-mid); line-height: 1.75; white-space: pre-wrap; }
+.response-box.loading { color: var(--ink-faint); font-style: italic; font-size: 13px; }
+
+/* History */
+.history-section { max-width: 660px; margin: 0 auto 2rem; padding: 0 1.25rem; }
+.history-toggle { width: 100%; background: white; border: 1px solid var(--paper-deep); border-radius: var(--radius-lg); padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
+.history-toggle:hover { background: var(--paper-warm); }
+.history-toggle-left { display: flex; align-items: center; gap: 10px; }
+.history-toggle-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 500; color: var(--ink); }
+.history-count { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; background: var(--gold-faint); color: var(--gold); border: 1px solid var(--gold-light); border-radius: 100px; padding: 2px 8px; }
+.history-chevron { font-size: 13px; color: var(--ink-soft); transition: transform 0.2s; display: inline-block; }
+.history-chevron.open { transform: rotate(180deg); }
+.history-body { display: none; margin-top: 10px; border: 1px solid var(--paper-deep); border-radius: var(--radius-lg); background: white; overflow: hidden; }
+.history-body.open { display: block; }
+.history-toolbar { padding: 10px 16px; border-bottom: 1px solid var(--paper-warm); display: flex; justify-content: flex-end; }
+.clear-btn { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); background: none; border: 1px solid var(--paper-deep); border-radius: var(--radius); padding: 5px 12px; cursor: pointer; transition: color 0.15s, border-color 0.15s; }
+.clear-btn:hover { color: var(--red); border-color: var(--red); }
+.history-empty { padding: 2rem; text-align: center; font-size: 13px; color: var(--ink-faint); font-style: italic; }
+.history-list { padding: 12px; display: flex; flex-direction: column; gap: 10px; max-height: 600px; overflow-y: auto; }
+.history-entry { border: 1px solid var(--paper-deep); border-radius: var(--radius); overflow: hidden; }
+.history-entry-header { padding: 8px 12px; background: var(--paper-warm); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.history-entry-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.history-practice-tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); background: var(--gold-faint); border: 1px solid var(--gold-light); border-radius: 100px; padding: 2px 8px; }
+.history-date { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink-faint); }
+.history-delete { background: none; border: none; color: var(--ink-faint); cursor: pointer; font-size: 16px; padding: 0 2px; line-height: 1; transition: color 0.15s; flex-shrink: 0; }
+.history-delete:hover { color: var(--red); }
+.history-entry-body { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.history-submitted { font-size: 13px; color: var(--ink); line-height: 1.6; padding: 8px 10px; background: var(--paper); border-radius: 6px; border-left: 2px solid var(--paper-deep); font-style: italic; }
+.history-response { font-size: 12.5px; color: var(--ink-mid); line-height: 1.7; white-space: pre-wrap; }
+
+/* Summary */
+.summary { max-width: 660px; margin: 0 auto 3rem; padding: 0 1.25rem; }
+.summary-box { background: var(--ink); border-radius: var(--radius-lg); padding: 1.75rem 2rem; }
+.summary-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 400; color: var(--gold-light); margin-bottom: 1.25rem; }
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.summary-item { border-left: 2px solid var(--gold); padding-left: 12px; }
+.summary-when { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+.summary-what { font-size: 12.5px; color: var(--paper-deep); line-height: 1.55; }
+.summary-closing { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.1); font-family: 'Playfair Display', serif; font-style: italic; font-size: 13.5px; color: var(--ink-soft); line-height: 1.7; }
+.footer { text-align: center; padding: 1.5rem 1rem 2rem; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--ink-faint); border-top: 1px solid var(--paper-deep); }
+@media (max-width: 480px) {
+  .hero { padding: 2.5rem 1.25rem 2rem; }
+  .summary-grid { grid-template-columns: 1fr; }
+  .summary-box { padding: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <p class="hero-eyebrow">Sexual 4w7 · Daily Practice</p>
+  <h1>The Gratitude<br><em>Practice</em></h1>
+  <p class="hero-sub">Not about counting blessings. About retraining where your attention lands first.</p>
+  <div class="gold-rule"></div>
+</div>
+
+<div class="foundation">
+  <div class="foundation-box">
+    <p class="foundation-label">The Foundation</p>
+    <p class="foundation-text">Gratitude for you isn't about appreciation — it's about accuracy. Your mind is a precision instrument calibrated to detect absence. These practices don't ask you to feel differently. They ask you to look more completely — to see what's actually there before the gap narrative fills the frame.</p>
+  </div>
+</div>
+
+<div class="practices">
+
+  <div class="practice">
+    <div class="practice-header">
+      <span class="practice-number">01</span>
+      <div class="practice-meta">
+        <p class="practice-when">Morning Drive</p>
+        <p class="practice-title">What's Already Real</p>
+        <p class="practice-tagline">60 seconds. One specific thing. Before the day starts.</p>
+      </div>
+    </div>
+    <div class="practice-body">
+      <div class="practice-text">
+        <p>Your drive naturally goes to one of two places — replaying something that bothered you, or anticipating something that hasn't happened yet. Both are the gap in different clothes. This intercepts that.</p>
+        <p>Pick one thing that exists in your life right now — already real, already yours — and spend 60 seconds describing it to yourself in detail. Not "I'm grateful for Ashley." Too thin. More like: "Ashley sat with me last night when I was in my head and didn't try to fix it. She just stayed. That's already mine."</p>
+        <p>The specificity is the whole mechanism. Vague gratitude slides off a 4. Specific, concrete, already-happened reality sticks.</p>
+      </div>
+      <div class="move-box">
+        <p class="move-label">The Move</p>
+        <p class="move-text">One thing. Sixty seconds. Described in detail to yourself. You don't have to feel moved by it. You just have to see it clearly before you walk into your day.</p>
+      </div>
+      <div class="interactive">
+        <p class="interactive-label">Optional — Engage</p>
+        <p class="interactive-prompt">Something already real today? Submit it and get a response built specifically for how a Sexual 4w7 processes gratitude.</p>
+        <div class="input-row">
+          <textarea id="input-1" placeholder="What's already real today..." rows="2"></textarea>
+          <button class="send-btn" onclick="submitEntry(1)">Submit</button>
+        </div>
+        <div class="response-area" id="response-1"><div class="response-box" id="response-box-1"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="practice">
+    <div class="practice-header">
+      <span class="practice-number">02</span>
+      <div class="practice-meta">
+        <p class="practice-when">Evening Dog Walk</p>
+        <p class="practice-title">The Inventory of the Actual</p>
+        <p class="practice-tagline">Slow scan. No structure. What's working — not what's perfect.</p>
+      </div>
+    </div>
+    <div class="practice-body">
+      <div class="practice-text">
+        <p>As you walk, do a slow scan of your actual life — not the life you're building, not the life you imagined at 25, your actual current life — and look for what's genuinely working.</p>
+        <p>The distinction matters for a 4. Perfect doesn't exist and you know it. But working — actually, quietly, reliably working — that's real and it's everywhere once you train your eye to see it. Your kids are okay. Your marriage has real depth. You have a creative capacity most people don't. You have a dog worth walking.</p>
+        <p>The walk practice is a deliberate interruption of both the 7 wing's future-orientation and the 4 core's gap-sensing — a slow, present-tense inventory of what is, not what isn't.</p>
+      </div>
+      <div class="move-box">
+        <p class="move-label">The Move</p>
+        <p class="move-text">No list. No structure. Just walk and look at your actual life with the same attention you normally give to what's missing from it.</p>
+      </div>
+      <div class="interactive">
+        <p class="interactive-label">Optional — Engage</p>
+        <p class="interactive-prompt">Something from your walk tonight — an observation, something that's working, something you noticed? Drop it here.</p>
+        <div class="input-row">
+          <textarea id="input-2" placeholder="Something from the walk..." rows="2"></textarea>
+          <button class="send-btn" onclick="submitEntry(2)">Submit</button>
+        </div>
+        <div class="response-area" id="response-2"><div class="response-box" id="response-box-2"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="practice">
+    <div class="practice-header">
+      <span class="practice-number">03</span>
+      <div class="practice-meta">
+        <p class="practice-when">On The Spot — Anytime</p>
+        <p class="practice-title">Already, Not Yet</p>
+        <p class="practice-tagline">When the gap feeling hits. No schedule required.</p>
+      </div>
+    </div>
+    <div class="practice-body">
+      <div class="practice-text">
+        <p>This one runs whenever the gap feeling hits — that familiar low-grade sense that something is missing, incomplete, not yet what it should be. When you notice it, you do one thing: name what's already true in the same area where the gap is living.</p>
+        <p>The gap feeling says: "This isn't where I'm supposed to be yet." The move says: "What's already here, in this exact area, that I'm looking past?"</p>
+        <p>This works for a 4 because it doesn't ask you to abandon depth or stop wanting more. It just asks you to stop letting the wanting erase what's already present.</p>
+      </div>
+      <div class="move-box">
+        <p class="move-label">The Phrase</p>
+        <p class="move-text">"Already, not yet." Both things are true. The practice is making sure "already" gets equal airtime.</p>
+      </div>
+      <div class="interactive">
+        <p class="interactive-label">Optional — Engage</p>
+        <p class="interactive-prompt">Feeling the gap right now? Name it here — what area, what it's saying. Get a response that works through it with you honestly.</p>
+        <div class="input-row">
+          <textarea id="input-3" placeholder="The gap is in... / it's saying..." rows="2"></textarea>
+          <button class="send-btn" onclick="submitEntry(3)">Submit</button>
+        </div>
+        <div class="response-area" id="response-3"><div class="response-box" id="response-box-3"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="practice">
+    <div class="practice-header">
+      <span class="practice-number">04</span>
+      <div class="practice-meta">
+        <p class="practice-when">Once a Day — Unscheduled</p>
+        <p class="practice-title">The Received Moment</p>
+        <p class="practice-tagline">Ten seconds. Let one small thing actually land.</p>
+      </div>
+    </div>
+    <div class="practice-body">
+      <div class="practice-text">
+        <p>Once a day — not scheduled, just whenever it happens — let one good thing that someone does for or toward you actually land. Don't process it, don't contextualize it, don't immediately think about what it means or whether it's enough. Just receive it completely for about ten seconds.</p>
+        <p>Ashley makes coffee. Let that land. Your kid laughs at something you said. Let that land. A song hits right on the drive. Let that land.</p>
+        <p>Sexual 4s are extraordinarily good at feeling things deeply in theory and extraordinarily prone to skipping over small real moments because they don't feel significant enough. This is specifically for that gap — between what's being offered and what you're actually receiving.</p>
+      </div>
+      <div class="move-box">
+        <p class="move-label">The Move</p>
+        <p class="move-text">Ten seconds. No logging. Just a full, complete reception of one small thing already given to you today. The Sexual 4 who learns to receive ordinary moments is the Sexual 4 who stops needing extraordinary ones to feel whole.</p>
+      </div>
+      <div class="interactive">
+        <p class="interactive-label">Optional — Engage</p>
+        <p class="interactive-prompt">Something offered to you today — small, ordinary, easy to skip past? Name it here.</p>
+        <div class="input-row">
+          <textarea id="input-4" placeholder="Something offered to me today..." rows="2"></textarea>
+          <button class="send-btn" onclick="submitEntry(4)">Submit</button>
+        </div>
+        <div class="response-area" id="response-4"><div class="response-box" id="response-box-4"></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- HISTORY -->
+<div class="history-section">
+  <button class="history-toggle" onclick="toggleHistory()">
+    <div class="history-toggle-left">
+      <span class="history-toggle-title">Your Entries</span>
+      <span class="history-count" id="history-count">0</span>
+    </div>
+    <span class="history-chevron" id="history-chevron">&#9660;</span>
+  </button>
+  <div class="history-body" id="history-body">
+    <div class="history-toolbar">
+      <button class="clear-btn" onclick="clearHistory()">Clear all entries</button>
+    </div>
+    <div id="history-content"></div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="summary">
+  <div class="summary-box">
+    <p class="summary-title">The Whole Practice at a Glance</p>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <p class="summary-when">Morning Drive</p>
+        <p class="summary-what">One specific already-real thing, described in detail. 60 seconds.</p>
+      </div>
+      <div class="summary-item">
+        <p class="summary-when">Evening Walk</p>
+        <p class="summary-what">Slow scan of what's actually working in your actual life. No structure.</p>
+      </div>
+      <div class="summary-item">
+        <p class="summary-when">When the Gap Hits</p>
+        <p class="summary-what">"Already, not yet." Name what's already true before the gap gets the whole frame.</p>
+      </div>
+      <div class="summary-item">
+        <p class="summary-when">Once a Day</p>
+        <p class="summary-what">Let one small offered thing land completely. Ten seconds.</p>
+      </div>
+    </div>
+    <p class="summary-closing">The goal isn't to stop feeling the gap. The gap is part of how you're wired and part of what makes you a genuinely deep person. The goal is to stop letting it be the only thing your attention finds. Real gratitude for a 4 isn't the absence of longing — it's the presence of both.</p>
+  </div>
+</div>
+
+<div class="footer">Built for Jeremiah Watkins · Sexual 4w7 · Enneagram Institute RHETI v2.5</div>
+
+<script>
+const STORAGE_KEY = 'jeremiah_gratitude_entries';
+const PRACTICE_NAMES = { 1: 'Morning Drive', 2: 'Evening Walk', 3: 'Already, Not Yet', 4: 'Received Moment' };
+
+const SYSTEM_PROMPT = `You are a compassionate guide responding to Jeremiah Watkins, a 41-year-old man who is a Sexual 4w7 on the Enneagram (Type 4 primary, strong Type 7 wing, Sexual instinct dominant).
+
+Key things to know about Jeremiah:
+- His core pattern is living in "the gap" — the persistent sense that something is missing or not yet fully realized
+- His 7 wing makes him future-oriented and prone to the escape hatch when things get hard
+- His Sexual instinct means he craves deep, intense connection and meaning above everything
+- He is married to Ashley (a Social 9w7) and they have children
+- He is in his 40s and working on a gratitude practice specifically designed to retrain his attention from absence toward what is already present
+- He does NOT want to journal or log things — he prefers internal, in-the-moment tools
+
+Your role: When he submits something, respond with depth, specificity, and honesty. Don't be generic. Don't be a cheerleader. Speak directly to how a Sexual 4w7 specifically processes gratitude and presence. Respond in 3-5 short paragraphs maximum. Warm but direct. No bullet points. No headers. No hollow affirmations.`;
+
+const PRACTICE_CONTEXTS = {
+  1: "Jeremiah is engaging with Practice 1 (Morning Drive — What's Already Real). He's naming something specific that is already real and already his. Help him see it more fully, more specifically, more concretely — the way a Sexual 4w7 actually needs to receive reality.",
+  2: "Jeremiah is engaging with Practice 2 (Evening Dog Walk — Inventory of the Actual). He's sharing something from a slow scan of his actual life. Deepen his view of what he's noticed, and gently point to anything he might be underselling or skipping past.",
+  3: "Jeremiah is engaging with Practice 3 (Already, Not Yet). He's naming a gap feeling — something that feels missing or incomplete. Hold both sides honestly: acknowledge the gap is real, then help him find and articulate what's already true in that same area. Don't minimize the gap. Don't let it win the whole frame.",
+  4: "Jeremiah is engaging with Practice 4 (The Received Moment). He's naming something small that was offered to him today — something he's practicing actually receiving rather than skipping past. Help him understand why this particular moment matters and what it says about his actual life as it is."
+};
+
+// Load entries from localStorage
+function loadEntries() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  } catch { return []; }
+}
+
+// Save entries to localStorage
+function saveEntries(entries) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+}
+
+// Format date
+function formatDate(ts) {
+  const d = new Date(ts);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) +
+    ' · ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+}
+
+// Render history
+function renderHistory() {
+  const entries = loadEntries();
+  const countEl = document.getElementById('history-count');
+  const contentEl = document.getElementById('history-content');
+  countEl.textContent = entries.length;
+
+  if (entries.length === 0) {
+    contentEl.innerHTML = '<p class="history-empty">No entries yet. Submit something from any practice above.</p>';
+    return;
+  }
+
+  const sorted = [...entries].reverse();
+  contentEl.innerHTML = '<div class="history-list">' +
+    sorted.map((e, i) => `
+      <div class="history-entry" id="entry-${e.id}">
+        <div class="history-entry-header">
+          <div class="history-entry-meta">
+            <span class="history-practice-tag">${PRACTICE_NAMES[e.practice]}</span>
+            <span class="history-date">${formatDate(e.timestamp)}</span>
+          </div>
+          <button class="history-delete" onclick="deleteEntry('${e.id}')" title="Delete">&#215;</button>
+        </div>
+        <div class="history-entry-body">
+          <div class="history-submitted">${escapeHtml(e.submitted)}</div>
+          <div class="history-response">${escapeHtml(e.response)}</div>
+        </div>
+      </div>
+    `).join('') +
+  '</div>';
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function deleteEntry(id) {
+  const entries = loadEntries().filter(e => e.id !== id);
+  saveEntries(entries);
+  renderHistory();
+}
+
+function clearHistory() {
+  if (confirm('Clear all entries? This cannot be undone.')) {
+    saveEntries([]);
+    renderHistory();
+  }
+}
+
+function toggleHistory() {
+  const body = document.getElementById('history-body');
+  const chevron = document.getElementById('history-chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+
+async function submitEntry(num) {
+  const textarea = document.getElementById(`input-${num}`);
+  const responseArea = document.getElementById(`response-${num}`);
+  const responseBox = document.getElementById(`response-box-${num}`);
+  const btn = textarea.nextElementSibling;
+  const text = textarea.value.trim();
+  if (!text) return;
+
+  btn.disabled = true;
+  btn.textContent = '...';
+  responseArea.classList.add('visible');
+  responseBox.classList.add('loading');
+  responseBox.textContent = 'Sitting with that...';
+
+  let reply = '';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: [{ role: 'user', content: `${PRACTICE_CONTEXTS[num]}\n\nJeremiah wrote: "${text}"` }]
+      })
+    });
+    const data = await res.json();
+    reply = data.content?.find(b => b.type === 'text')?.text || 'Something went wrong. Try again.';
+  } catch {
+    reply = "Couldn't connect. Check your internet and try again.";
+  }
+
+  responseBox.classList.remove('loading');
+  responseBox.textContent = reply;
+  btn.disabled = false;
+  btn.textContent = 'Submit';
+
+  // Save to localStorage
+  if (!reply.includes("Couldn't connect") && !reply.includes('Something went wrong')) {
+    const entries = loadEntries();
+    entries.push({
+      id: Date.now().toString(),
+      practice: num,
+      submitted: text,
+      response: reply,
+      timestamp: Date.now()
+    });
+    saveEntries(entries);
+    renderHistory();
+  }
+}
+
+// Auto-resize textareas
+document.querySelectorAll('textarea').forEach(ta => {
+  ta.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  });
+  ta.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      submitEntry(parseInt(this.id.split('-')[1]));
+    }
+  });
+});
+
+// Init
+renderHistory();
+</script>
+</body>
+</html>
